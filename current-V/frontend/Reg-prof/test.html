@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <input type="file" id="fileInput" style="display: none;">
+<button onclick="fileinput()">Select File</button>
+
+<script>
+async function fileinput() {
+  const { value: file } = await Swal.fire({
+    title: "Select image",
+    input: "file",
+    inputAttributes: {
+      "accept": "image/*",
+      "aria-label": "Upload your profile picture"
+    }
+  });
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      // Set the image src attribute or display it in an img tag
+      document.getElementById('fileInput').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+</script>
+
+</body>
+</html>

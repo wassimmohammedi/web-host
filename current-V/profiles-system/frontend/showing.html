@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Info</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: block;
+            justify-content: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+        .container {
+            margin-left: 30%;
+            box-shadow: 1px 1px 10px rgb(136, 136, 136);
+            height: fit-content;
+            width: 40vw;
+            padding: 30px;
+            border-radius: 20px;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .container {
+                margin-left: 10%;
+                box-shadow: 1px 1px 10px rgb(136, 136, 136);
+                height: fit-content;
+                width: 80vw;
+                padding: 30px;
+                border-radius: 20px;
+            }
+        }
+
+        .profile-container {
+            margin-top: 20px;
+        }
+
+        .profile-container img {
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        #createProfileBtn {
+            margin-top: 20px;
+        }
+
+        #profileForm {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .mb-3 {
+            border: 1.5px solid rgb(174, 0, 255);
+        }
+
+        #profilePhotoInput {
+            background-color: rgb(189, 189, 189);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="container">
+        <form action="http://localhost:3000/dashboard" method="GET" target="_blank">
+            <button type="submit" class="btn btn-secondary">
+                <i class="bi bi-gear"></i> Settings
+            </button>
+        </form>
+        
+        <h1><span id="username"></span></h1>
+        <div class="profile-container">
+            <div id="userProfile"></div> <!-- This will display the user's profile -->
+        </div>
+        <button id="createProfileBtn" class="btn btn-primary">Create/Update Profile</button>
+        <div id="profileForm">
+            <form id="profileCreationForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="schoolName" class="form-label">School Name:</label>
+                    <input type="text" class="form-control-sm" id="schoolName" placeholder="Enter your school name" required>
+                </div>
+                <div class="form-group">
+                    <label for="profilePhotoInput" class="form-label">Profile Photo:</label>
+                    <input type="file" class="btn btn-primary" id="profilePhotoInput">
+                    <img src="" id="image" style="display: none; height: 50px; width: 50px; border-radius: 10px;">
+                  </div>
+                  
+                  <script>
+                    document.getElementById('profilePhotoInput').addEventListener('change', (event) => {
+                      const file = event.target.files[0];
+                  
+                      if (file) {
+                        const reader = new FileReader();
+                  
+                        reader.onload = (e) => {
+                          const image = document.getElementById('image');
+                          image.src = e.target.result;
+                          image.style.display = 'flex'; // Make the image visible
+                        };
+                  
+                        reader.readAsDataURL(file);
+                      }
+                    });
+                  </script>
+                  
+                  
+                <div class="form-group">
+                    <label for="publication" class="form-label">Publication:</label>
+                    <input type="text" class="form-control-sm" id="publication" placeholder="Enter publication" required>
+                </div>
+                <div class="form-group">
+                    <label for="wilaya" class="form-label">Wilaya:</label>
+                    <input type="text" class="form-control-sm" id="wilaya" placeholder="Enter wilaya" required>
+                </div>
+                <div class="form-group">
+                    <label for="comune" class="form-label">Comune:</label>
+                    <input type="text" class="form-control-sm" id="comune" placeholder="Enter comune" required>
+                </div>
+                <div class="form-group">
+                    <label for="level" class="form-label">Level:</label>
+                    <input type="text" class="form-control-sm" id="level" placeholder="Enter level" required>
+                </div>
+              
+                <button type="button" onclick="confirme();" class="btn btn-success">Save Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    async    function fileinput() {
+            const { value: file } = await Swal.fire({
+  title: "Select image",
+  input: "file",
+  inputAttributes: {
+    "accept": "image/*",
+    "aria-label": "Upload your profile picture"
+  }
+});
+if (file) {
+  const reader = new FileReader();
+  const image=document.getElementById('image');
+  reader.onload = (e) => {
+    Swal.fire({
+      title: "Your uploaded picture",
+      imageUrl: e.target.result,
+      imageAlt: "The uploaded picture"
+    });
+  };
+  reader.readAsDataURL(file);
+}
+        }
+
+
+        // Fetch the user data from the server and display it
+        fetch('/user-info')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('username').textContent = data.username;
+                // Ensure the profile photo display logic is correct
+                if (data.profile_photo) {
+                    document.getElementById('userProfile').innerHTML = `
+                        <img id="profilePhoto" src="/uploads/${data.profile_photo}" alt="Profile Photo" class="mb-3">
+                    `;
+                }
+            })
+            .catch(error => console.error('Error fetching user data:', error));
+
+        // Fetch the user profile data and display it in the form
+        fetch('/user-profile')
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    // Display user profile below user info
+                    const userProfile = document.getElementById('userProfile');
+                    userProfile.innerHTML += `
+                        <h3>Your Profile:</h3>
+                        <img src="/uploads/${data.profilePhoto}" alt="Profile Photo" class="mb-3">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <td>School Name</td>
+                                    <td>${data.schoolName}</td>
+                                </tr>
+                                <tr>
+                                    <td>Publication</td>
+                                    <td>${data.publication}</td>
+                                </tr>
+                                <tr>
+                                    <td>Wilaya</td>
+                                    <td>${data.wilaya}</td>
+                                </tr>
+                                <tr>
+                                    <td>Comune</td>
+                                    <td>${data.comune}</td>
+                                </tr>
+                                <tr>
+                                    <td>Level</td>
+                                    <td>${data.level}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    `;
+
+                    // Fill the form with existing profile data
+                    document.getElementById('schoolName').value = data.schoolName;
+                    document.getElementById('publication').value = data.publication;
+                    document.getElementById('wilaya').value = data.wilaya;
+                    document.getElementById('comune').value = data.comune;
+                    document.getElementById('level').value = data.level;
+                }
+            })
+            .catch(error => console.error('Error fetching profile data:', error));
+
+        document.getElementById('createProfileBtn').addEventListener('click', function() {
+            var profileForm = document.getElementById('profileForm');
+            profileForm.style.display = profileForm.style.display === 'block' ? 'none' : 'block';
+        });
+
+        function createProfile() {
+            const schoolName = document.getElementById('schoolName').value;
+            const publication = document.getElementById('publication').value;
+            const wilaya = document.getElementById('wilaya').value;
+            const comune = document.getElementById('comune').value;
+            const level = document.getElementById('level').value;
+            const profilePhotoInput = document.getElementById('profilePhotoInput').files[0];
+
+            const formData = new FormData();
+            formData.append('schoolName', schoolName);
+            formData.append('publication', publication);
+            formData.append('wilaya', wilaya);
+            formData.append('comune', comune);
+            formData.append('level', level);
+            formData.append('profilePhoto', profilePhotoInput);
+
+            fetch('/create', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/showing';
+                }
+            })
+            .catch(error => console.error('Error creating profile:', error));
+        }
+
+        function confirme() {
+    Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "enregistrer",
+        denyButtonText: `ne pas enregistrer`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+position: "top-end",
+icon: "success",
+title: "votre travaille a ete enregistre",
+showConfirmButton: false,
+timer: 1500
+});
+            createProfile();
+            setTimeout(() => {
+                window.location.reload(); // Refresh the page after 3 seconds
+            }, 2000); 
+
+        } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+        }
+    });
+}
+    </script>
+</body>
+</html>
+

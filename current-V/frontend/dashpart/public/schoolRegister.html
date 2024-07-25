@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sign up page</title>
+
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+     
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/plugins.min.css">
+    <link rel="stylesheet" href="../assets/css/kaiadmin.css">
+</head> 
+
+<style>
+    section { 
+        height: 100vh;
+        width: 100%;
+    
+    }
+    input { 
+      background-color: red;
+    }
+</style>
+<body>
+        <section class= "conatiner d-flex justify-content-center ">
+             
+            <form class="  d-flex flex-column justify-content-center ">  
+               
+                    <h1>sign up for schools </h1>
+                    <label for="name">your school name </label>
+                    <input type="text" id="name" name="name" class="form-control" required>
+              <br>
+                    <div class="adress d-flex justify-content-between pb-3 pt-3">
+                      <div class="wilaya">
+                        <label for="wilaya">la wilaya : </label>
+                        <select class="form-select" aria-label="Default select example" id="wilaya" name="wilaya">
+                          <option value="1">Adrar</option>
+                          <option value="2">Chlef</option>
+                          <option value="3">Laghouat</option>
+                     
+                        </select>
+                      </div>
+
+                      <div class="baladiya">
+                        <label for="baladiya">la baladiya : </label>
+                        <select class="form-select" aria-label="Default select example" id="baladiya">
+                          
+                        </select>
+                      </div>
+                      
+                    </div>
+
+                    <label for="email">email:</label>
+                    <input type="email" id="email" name="email" class="form-control" required > 
+
+                    <label for="phoneNumber">nemero telephone:</label>
+                    <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" required>
+
+                    <label for="address">address :</label>
+                    <input type="text" id="address" name="address" class="form-control" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+
+                   
+
+                    <button type="submit"  class="btn btn-success mt-3 " id="signUp">sign up</button>
+                    <span> you have acount then <a href="/schoolLogin">login</a>  </span>  
+
+                    <!-- <p class="error_message" id="error_message"></p> -->
+                     
+                    <div class="mt-1" role="alert" id="error_message">
+                    
+                    </div>
+             
+            </form>
+            
+        </section>
+
+        <script>
+          function getWilaya(){ 
+            let wilaya = document.getElementById('wilaya');
+            let baladiya = document.getElementById('baladiya');
+            let wilayaValue = wilaya.value;
+
+            switch (wilayaValue){
+              case '1':
+                baladiya.innerHTML = `
+                <option value="1" selected >1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                `
+                break;
+                case '2':
+                baladiya.innerHTML = `
+                <option value="1" selected >4</option>
+                <option value="2">5</option>
+                <option value="3">6</option>
+                `
+            }
+          }
+          getWilaya(); 
+
+          document.getElementById('wilaya').addEventListener('change', getWilaya);
+          
+          let signUp_button = document.getElementById('signUp');
+          signUp_button.addEventListener("click" , function(e) { 
+             e.preventDefault();
+              let name = document.getElementById('name').value;
+              let wilaya = document.getElementById('wilaya').value;
+              let baladiya = document.getElementById('baladiya').value;
+              let email = document.getElementById('email').value;
+              let phoneNumber = document.getElementById('phoneNumber').value;
+              let password = document.getElementById('password').value;
+              let address = document.getElementById('address').value;
+
+              let data = { 
+                name,
+                wilaya,
+                baladiya,
+                email,
+                phoneNumber,
+                password , 
+                address
+              } 
+
+              if (name == '' || email == '' || phoneNumber == '' || password == '' || address == '') { 
+                document.getElementById('error_message').innerHTML = "please fill all the fields";
+                error_message.classList.add('alert');
+                error_message.classList.add('alert-danger'); 
+                return;
+              }else { 
+                document.getElementById('error_message').innerHTML = "";
+                error_message.classList.remove('alert');
+                error_message.classList.remove('alert-danger'); 
+
+                fetch("/register", {
+                method: "POST",
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              })
+              .then(response => response.json())
+              .then(data => {
+                 console.log(data);
+               
+              })
+              }
+              
+
+          })
+
+        </script>
+</body>
+</html>

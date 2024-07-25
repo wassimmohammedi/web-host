@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="assets/img/kaiadmin/favicon.ico"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="assets/css/plugins.min.css" /> -->
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="assets/css/demo.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+          <!-- Logo Header -->
+          <div class="logo-header" data-background-color="dark">
+           
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <li class="nav-item ">
+                <a
+                  data-bs-toggle="collapse"
+                  href="/"
+                  class="collapsed"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-home"></i>
+                  <p>Dashboard</p>
+                
+                </a>
+                
+              </li>
+              <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                  <i class="fa fa-ellipsis-h"></i>
+                </span>
+                <h4 class="text-section">Components</h4>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#base">
+                  <i class="fas fa-user"></i>
+                  <p>les étudiant</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="base">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="/addStudent">
+                        <span class="sub-item">ajouter</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/studentList">
+                        <span class="sub-item">la list des etudiants</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/enrollments">
+                        <span class="sub-item">les inscriptions</span>
+                      </a>
+                    </li>
+                    
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                  <i class="fas fa-book-open"></i>
+                  <p>les formation</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="sidebarLayouts">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="/addCourse">
+                        <span class="sub-item">ajouter</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/listOfcourses">
+                        <span class="sub-item">la list des formation </span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              
+              
+              <li class="nav-item">
+                <a class="nav-link" href="">
+                  <span>
+                    
+                    <i class="fas fa-th"></i>
+                  </span>
+                </a>
+              </li>
+             
+            
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+              <a href="index.html" class="logo">
+                <img
+                  src="assets/img/kaiadmin/logo_light.svg"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                  height="20"
+                />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <nav
+            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+          >
+            <div class="container-fluid">
+             
+              <h3>
+                <span class="profile-username">
+                  
+                  <span class="fw-bold" id="nameOFuser"> </span>
+                </span>
+              </h3> 
+            </div>
+          </nav>
+
+          
+          <!-- End Navbar -->
+        </div>
+
+        <div class="container">
+          <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title
+                ">Ajouter un étudiant</h4>
+                </div>
+                <div class="row"> 
+                  <div class="col-md-12">
+                    <div class="" id="errorMessage"> 
+                       
+                    </div>
+                  </div>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="/addStudent" method="POST">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group
+                                            ">
+                                                <label for="name">le nom :</label>
+                                                <input type="text" class="form-control" name="familyName" id="familyName" placeholder="entrez le nom">
+                                                <br>
+
+                                                <label for="name">let prenom :</label>
+                                                <input type="text" class="form-control" name="name" id="name" placeholder="entrez le prenom">
+                                                <br>
+
+                                                <label for="name">numéro de téléphone : </label>
+                                                <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="entrez le numéro de téléphone">
+                                                <br>
+                                                <label for="name">email :</label>
+                                                <input type="text" class="form-control" name="email" id="email" placeholder="entrez le email ">
+                                                <br>
+
+                                                <label for="name">address</label>
+                                                <input type="text" class="form-control" name="address" id="address" placeholder="entrez l'address de l'etudiant">
+                                                <br>
+                                                <button class="btn btn-success" id="addStudent">
+                                                    <span class="btn-label">
+                                                      <i class="fa fa-check"></i>
+                                                    </span>
+                                                    ajouter
+                                                  </button>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    
+                                </form>
+                                        
+                                        
+                
+              </div>
+            </div>
+          </div>
+            
+        </div>
+      </div>
+    </div>
+             
+                       
+
+        
+      
+      
+     
+    <script>
+      // let nameOFuser = document.getElementById('nameOFuser');
+      // fetch("/getName" , {
+      //   method: "GET",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     nameOFuser.innerHTML = data[0].name;
+      //   });
+
+        let addStudent = document.getElementById('addStudent');
+        addStudent.addEventListener("click" , function(e){ 
+          e.preventDefault(); 
+          let familyName = document.getElementById('familyName')
+          let name = document.getElementById('name')
+          let phoneNumber = document.getElementById('phoneNumber')
+          let email = document.getElementById('email')
+          let address = document.getElementById('address')
+
+          let data = {
+            familyName : familyName.value,
+            name : name.value,
+            phoneNumber : phoneNumber.value,
+            email : email.value,
+            address : address.value
+          } 
+          if (familyName.value == "" || name.value == "" || phoneNumber.value == "" || email.value == "" || address.value == ""){
+            let errorMessage = document.getElementById('errorMessage')
+            errorMessage.innerHTML = `<div class="alert alert-danger text-danger" role="alert"> 
+              <strong>Erreur !</strong> vous devez remplir tous les champs 
+              </div>` 
+            return
+          }else if(phoneNumber.value.length != 10 || isNaN(phoneNumber.value || phoneNumber.value[0] != 0) ){  
+            let errorMessage = document.getElementById('errorMessage')
+            errorMessage.innerHTML = `<div class="alert alert-danger text-danger" role="alert"> 
+              <strong>Erreur !</strong> le numéro de téléphone doit contenir 10 chiffres et commencer par 0 
+              </div>` 
+            return
+          }
+          fetch("/addStudent" , {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if(data.status == 200){
+                alert('l\'etudiant a été ajouté avec succès')
+              }else if(data.status == 401){
+                let errorMessage = document.getElementById('errorMessage')
+            errorMessage.innerHTML = `<div class="alert alert-danger text-danger" role="alert"> 
+              <strong>Erreur !</strong> l'etudiant existe déja
+              </div>` 
+              }else if(data.status == 402){
+                let errorMessage = document.getElementById('errorMessage')
+            errorMessage.innerHTML = `<div class="alert alert-danger text-danger" role="alert"> 
+              <strong>Erreur !</strong>  ${data.message[0].msg} 
+              </div>` 
+              }
+            });
+
+        })
+
+
+    </script>
+    <!--   Core JS Files   -->
+    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    
+
+    <!-- Datatables -->
+    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+
+    
+ 
+ 
+
+    <!-- Kaiadmin JS -->
+    <script src="assets/js/kaiadmin.min.js"></script>
+
+     
+    
+  </body>
+</html>

@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic</title> 
+
+
+    <!-- bootstrap cdn links  -->
+     
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+     
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="../assets/css/plugins.min.css"> -->
+    <link rel="stylesheet" href="../assets/css/kaiadmin.css">
+ 
+
+
+</head>
+<style>
+  /* body { 
+    background-color: #dfdfdf;
+  } */
+</style>
+<body >
+    <section class=" container">
+        <div class="conatiner d-flex flex-column align-items-center m-5">
+
+            
+            <h1>login  for schools </h1>
+             <form class="d-flex flex-column justify-content-center "> 
+
+                <label for="idSchool"> your id : </label>
+                <input type="text" id="idSchool" name="idSchool" class="form-control" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+
+                <button type="submit"  class="btn btn-success mt-3 " id="loginBtn">Login</button>
+                <span> you dont have an acount then <a href="/schoolRegister">sign up</a>  </span>
+                <!-- <p class="" id="error_message"></p> -->
+                <div class="mt-1" role="alert" id="error_message">
+                    
+                </div>
+            </form>
+
+        </div>
+    </section> 
+
+    <script>
+
+      let loginBtn = document.getElementById('loginBtn');
+      loginBtn.addEventListener('click',   (e) => {
+        e.preventDefault();
+        let idSchool = document.getElementById('idSchool').value;
+        let password = document.getElementById('password').value; 
+
+        let data = {
+          idSchool,
+          password
+        }
+
+        fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          if(data.status === 200 ) {
+            window.location.href = '/dashboard';
+          } else {
+            let error_message = document.getElementById('error_message');
+            error_message.innerHTML = "wrong id or password";
+                error_message.classList.add('alert');
+                error_message.classList.add('alert-danger'); 
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        })
+
+
+
+      });
+         
+    </script>
+</body>
+</html>

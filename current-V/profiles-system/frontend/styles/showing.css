@@ -1,0 +1,39 @@
+
+
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: aqua;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    .profile-container {
+        margin-top: 20px;
+    }
+
+    .profile-container img {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    #createProfileBtn {
+        margin-top: 20px;
+    }
+
+    #profileForm {
+        margin-top: 20px;
+        display: none;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
